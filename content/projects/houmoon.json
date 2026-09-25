@@ -4,6 +4,6 @@
   "date": "2024",
   "status": "Start-up · 2024–2026",
   "description": "An AI wellbeing app, tested with about 100 internal users and closed in 2026 before any public release.",
-  "body": "Houmoon was designed as a mobile wellbeing app that drew on the Dao De Jing, the I Ching and the philosophy of Wang Yangming. Four modules were planned. The first was a daily feed of short philosophical passages, and the second was a practice area for meditation, journaling and breathing. The third covered the Five Elements and the I Ching, while the fourth was a Future Self dialogue with AI characters based on philosophical figures. The first prototype was built with React Native and Firebase between October 2024 and April 2025. However, it was archived because of technical debt and a widening scope, and a new code base was started. About 100 people used the app in internal testing, but no version was released publicly.\n\nHoumoon Ltd, company number [15622617](https://find-and-update.company-information.service.gov.uk/company/15622617), was incorporated in the United Kingdom on 6 April 2024 and dissolved on 12 May 2026.",
+  "body": "The [Houmoon archive](/houmoon/) records the product, its timeline and the public company record.\\n\\nHoumoon Ltd, company number [15622617](https://find-and-update.company-information.service.gov.uk/company/15622617), was incorporated in the United Kingdom on 6 April 2024 and dissolved on 12 May 2026.",
   "related": []
 }
