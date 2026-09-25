@@ -1,21 +1,13 @@
-I'm Boyu Hou. Most people who know me in English call me Billy. I studied Computer Science and Electronics at the University of Bristol. I did not enter university knowing exactly what kind of research I wanted to do. For a long time I was more interested in building things than defining a research field for myself.
+I am Boyu Hou, and most people who know me in English call me Billy. At Delia School of Canada, on the Ontario curriculum, I took Business Leadership: Management Fundamentals, Calculus and Vectors, and Financial Accounting Fundamentals. These were my first courses in finance. However, I did not continue with finance at university. Computing and AI interested me more, so I studied Computer Science and Electronics at Bristol. Later, the models I cared about most turned out to be easiest to test on financial markets. That brought me back to the grounding I had started with.
 
-## Building first
+## Houmoon
 
-Early on I worked on software, electronics, systems, and experiments with AI products. I tended to learn by building first and understanding the larger question afterwards.
+I founded Houmoon Ltd in April 2024, while I was still at Bristol. The product was a mobile app for everyday reflection, built with React Native and Firebase. In it, a conversational AI guided short reflective sessions alongside journaling. About 100 people used it in internal testing, but it was never released publicly. I closed the company in May 2026 for two reasons. First, the product sat close to the line of UK medical regulation. Second, I had planned to stay in the UK on a start-up visa after graduating, and I decided instead to apply for graduate study in the United States.
 
-### Houmoon Ltd. · 2024–2026
+## From speech enhancement to learning systems
 
-While I was at university, I started Houmoon, a company built around an early idea for AI-assisted mental healthcare. I closed the company in 2026. Looking back, the idea and my understanding of the problem were still too immature. It was nevertheless my first serious attempt to turn something I believed in into a product outside coursework.
+In my final year at Bristol, I worked in a group of six on causal audio-visual speech enhancement with Mamba. I then built VDBC-Mamba-2 on my own. The paper is now submitted to IEEE ICASSP 2027. Speech enhancement was where I started, but the part that held my attention was the model itself. A state-space model carries a hidden state forward as each new frame arrives, so what it knows at any moment depends on everything it has already seen. Therefore, I began to ask what it would take for a deployed system to keep learning from the data it receives.
 
-## The question that stayed
+## Now
 
-In 2026, I worked with a group on [causal audio-visual speech enhancement with Mamba](/projects/causal-avse-with-mamba/). It was preliminary coursework. I later pursued a different single-author research project in the same area, [VDBC-MAMBA-2](/research/vdbc-mamba2/).
-
-What stayed with me was not speech enhancement itself. Working with recurrent state-space models made me think more seriously about what it means for a system to carry information forward through time. That eventually led me to a broader question: what would an artificial system look like if experience after deployment were part of learning rather than merely additional context for inference?
-
-## Where I am now
-
-I am interested in artificial systems with historical depth. I aim to build AI that can maintain state, revise beliefs, consolidate memories, and continue adapting as the world changes. I do not yet know what the right architecture for that is.
-
-[Living Through History](/projects/living-through-history/) is one experiment I plan to run. It has not started yet. I also write short notes when a question will not leave me alone, such as [I Looked at a Window](/notes/i-looked-at-a-window/).
+This is the direction I want to follow in graduate study. I want to build AI that maintains state, revises its beliefs and adapts with low latency as conditions change. Financial markets give a strict test of this. A model there has to act before the data are complete, and each forecast is later checked by the prices that follow. My VaR and HMM projects are a first step, and both were rechecked so that every forecast uses only past data. Furthermore, Living Through History, a planned experiment, would move a learning system through market history from about 1900 onwards without letting it see the future. I do not yet know which architecture is right for this.

@@ -1,7 +1,7 @@
 {
-  "slug":"living-through-history",
-  "title":"Living Through History",
-  "status":"Planned experiment",
-  "description":"A planned experiment in learning from a historical timeline without seeing the future.",
-  "body":"I want to place a learning system at the beginning of a historical timeline and reveal information only when it would have become available at the time. The initial environment I plan to use is the financial market from roughly 1900 onwards. The objective is not simply to predict prices. I want to study what happens when a system must make decisions, maintain a view of the world, revise earlier beliefs, and continue learning without access to future information."
+  "slug": "living-through-history",
+  "title": "Living Through History",
+  "status": "Planned experiment",
+  "description": "A planned experiment in learning from a historical timeline without seeing the future.",
+  "body": "A learning system will be placed at the start of a historical timeline, and each piece of information will be revealed only when it would have become available at the time. The first environment is planned to be the financial market from about 1900 onwards. Price prediction is only one part of the test. In addition, the system must make decisions, keep a view of the world, revise earlier beliefs and continue learning, all without access to later data. The experiment has not started yet."
 }

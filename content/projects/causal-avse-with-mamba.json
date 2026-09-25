@@ -1,14 +1,23 @@
 {
-  "slug":"causal-avse-with-mamba",
-  "title":"Causal Audio-Visual Speech Enhancement with Mamba",
-  "date":"2026",
-  "status":"Group coursework · University of Bristol · 2026",
-  "description":"An early group project exploring causal audio-visual speech enhancement with a Mamba-based architecture. The work was preliminary and was completed as part of a university group assignment.",
-  "reportTitle":"Trust is All You Need: Real-Time Audio-Visual Speech Enhancement with Reliability-Aware Causal Mamba",
-  "authors":["Billy Hou","Dominic Jackson","Shunjie Qiu","Ronny Tu","Fan Xu","Zhenning Zhao"],
-  "supervisor":"Dr F. Karameh",
-  "institution":"School of Electrical, Electronic, and Mechanical Engineering · University of Bristol",
-  "code":"https://github.com/BillyHou1/LiteMambaAVSE-RT",
-  "body":"This was group coursework, not a peer-reviewed publication. We explored real-time audio-visual speech enhancement using a causal Mamba-based system and evaluated it under noisy and disrupted visual conditions.\n\nThe report's work allocation lists my contributions to visual confidence estimation, the Scout lookahead design, the AudioNeed amplifier, the multi-task loss, fusion experiments, multi-speaker mixing, ablations, bug audits, and system integration. These were parts of a six-person project.\n\nIt was my first sustained attempt at causal audio-visual speech enhancement with recurrent state-space models. A later, single-author research project, VDBC-MAMBA-2, followed this experimentation but uses a different architecture and conditioning mechanism.",
-  "related":["research/vdbc-mamba2"]
+  "slug": "causal-avse-with-mamba",
+  "title": "Causal Audio-Visual Speech Enhancement with Mamba",
+  "date": "2026",
+  "status": "Group coursework · University of Bristol · 2026",
+  "description": "Six-person Bristol coursework on causal audio-visual speech enhancement with a Mamba backbone.",
+  "reportTitle": "Trust is All You Need: Real-Time Audio-Visual Speech Enhancement with Reliability-Aware Causal Mamba",
+  "authors": [
+    "Billy Hou",
+    "Dominic Jackson",
+    "Shunjie Qiu",
+    "Ronny Tu",
+    "Fan Xu",
+    "Zhenning Zhao"
+  ],
+  "supervisor": "Dr F. Karameh",
+  "institution": "School of Electrical, Electronic, and Mechanical Engineering · University of Bristol",
+  "code": "https://github.com/BillyHou1/LiteMambaAVSE-RT",
+  "body": "The project built a real-time audio-visual speech enhancement system on a causal Mamba backbone and tested it under noisy and disrupted visual input. According to the report's work allocation, my parts were the visual confidence estimator, the Scout lookahead design, the AudioNeed amplifier and its later removal, and the multi-task loss. I also worked on the multiplicative fusion cascade, the three-channel cocktail-party mixing protocol, the bug audit, the configuration ablations and the per-SNR contribution experiment. In addition, I integrated all components into one system. The report was not peer reviewed, and its results belong to all six authors.",
+  "related": [
+    "research/vdbc-mamba2"
+  ]
 }

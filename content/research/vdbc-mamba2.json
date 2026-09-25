@@ -1,14 +1,18 @@
 {
-  "slug":"vdbc-mamba2",
-  "title":"VDBC-MAMBA-2: Visual-Delta Band Conditioning for Causal Audio-Visual Speech Enhancement",
-  "authors":["Boyu Hou"],
-  "date":"2026-09-23",
-  "publicationDate":"2026-09-24",
-  "status":"Preprint · Submitted to IEEE ICASSP 2027",
-  "description":"Visual-Delta Band Conditioning for causal audio-visual speech enhancement.",
-  "abstract":"In real-time audio-visual speech enhancement (AVSE), the speaker’s visual information is used as a complementary signal under causal constraints. Feature-wise linear modulation (FiLM), used for visual conditioning, does not guarantee content-driven responses over mere stream presence. Visual-Delta Band Conditioning (VDBC) is proposed: a shared MLP is run on both the real visual embedding and a zero vector for each frequency band, and the two outputs are subtracted, forcing the visual delta to zero when the visual input is zero. VDBC is combined with a causal BlazeNet64 front-end and six causal, frequency-bidirectional Mamba-2 modules to form VDBC-Mamba-2. On LRS2 with DEMAND noise, VDBC-Mamba-2 achieves PESQ 2.022, STOI 0.890, and SI-SDR 11.07 dB with 4.293 M parameters, vs. 8.873 M for CausalRAVEN. Under all-black input, degradation forms a strict gradient: VDBC (−0.09 dB), FiLM (−0.39 dB), BandFiLM (−17.00 dB), and CausalRAVEN (−65.7 dB); the BandFiLM ablation isolates the delta subtraction as the robustness factor.",
-  "pdf":"/research/vdbc-mamba2/vdbc-mamba2.pdf",
-  "code":"https://github.com/BillyHou1/VDBC-Mamba-2",
-  "body":"This work followed earlier experimentation with causal audio-visual speech enhancement and develops a different architecture and conditioning mechanism.",
-  "related":["projects/causal-avse-with-mamba"]
+  "slug": "vdbc-mamba2",
+  "title": "VDBC-MAMBA-2: Visual-Delta Band Conditioning for Causal Audio-Visual Speech Enhancement",
+  "authors": [
+    "Boyu Hou"
+  ],
+  "date": "2026-09-23",
+  "publicationDate": "2026-09-24",
+  "status": "Preprint · Submitted to IEEE ICASSP 2027",
+  "description": "Visual-Delta Band Conditioning for causal audio-visual speech enhancement.",
+  "abstract": "In real-time audio-visual speech enhancement (AVSE), the speaker’s visual information is used as a complementary signal under causal constraints. Feature-wise linear modulation (FiLM), used for visual conditioning, does not guarantee content-driven responses over mere stream presence. Visual-Delta Band Conditioning (VDBC) is proposed: a shared MLP is run on both the real visual embedding and a zero vector for each frequency band, and the two outputs are subtracted, forcing the visual delta to zero when the visual input is zero. VDBC is combined with a causal BlazeNet64 front-end and six causal, frequency-bidirectional Mamba-2 modules to form VDBC-Mamba-2. On LRS2 with DEMAND noise, VDBC-Mamba-2 achieves PESQ 2.022, STOI 0.890, and SI-SDR 11.07 dB with 4.293 M parameters, vs. 8.873 M for CausalRAVEN. Under all-black input, degradation forms a strict gradient: VDBC (−0.09 dB), FiLM (−0.39 dB), BandFiLM (−17.00 dB), and CausalRAVEN (−65.7 dB); the BandFiLM ablation isolates the delta subtraction as the robustness factor.",
+  "pdf": "/research/vdbc-mamba2/vdbc-mamba2.pdf",
+  "code": "https://github.com/BillyHou1/VDBC-Mamba-2",
+  "related": [
+    "projects/causal-avse-with-mamba"
+  ],
+  "bibtex": "/research/vdbc-mamba2/vdbc-mamba2.bib"
 }
