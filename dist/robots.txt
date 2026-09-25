@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://boyuhou.com/sitemap.xml
