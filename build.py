@@ -144,7 +144,7 @@ for kind in KINDS:
                 raise FileNotFoundError(f'Publication PDF missing: {item["pdf"]}')
             extras=[f'<meta name="citation_title" content="{x(title)}">']+[f'<meta name="citation_author" content="{x(a)}">' for a in authors]
             extras += [f'<meta name="citation_abstract_html_url" content="{BASE+path}">']
-            if item.get('publicationDate'):extras.append(f'<meta name="citation_publication_date" content="{x(item["publicationDate"])}">')
+            if item.get('publicationDate'):extras.append(f'<meta name="citation_publication_date" content="{x(item["publicationDate"].replace("-","/"))}">')
             for field,tag in [('pdf','citation_pdf_url'),('doi','citation_doi')]:
                 if item.get(field):extras.append(f'<meta name="{tag}" content="{x(BASE+item[field] if field=="pdf" and item[field].startswith("/") else item[field])}">')
             extra=''.join(extras)
