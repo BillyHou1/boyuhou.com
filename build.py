@@ -126,13 +126,13 @@ home=f'''<section class="home-intro"><div class="home-intro-copy"><h1>Boyu Hou</
 </section>
 <section class="home-section notes-feature" aria-labelledby="notes-title"><h2 id="notes-title">Notes</h2><p class="item-meta">NOTE · SEP 2026</p><h3>{link(url('notes',window),'I Looked at a Window')}</h3><p>I thought I was looking at glass. But the observation itself did not prove that it was glass.</p><p class="small-link">{link(url('notes',window),'Read the note →')}</p></section>
 <section class="home-section upcoming" aria-labelledby="upcoming-title"><h2 id="upcoming-title">Upcoming</h2><p class="item-meta">Planned experiment</p><h3>{link(url('projects',history),history['title'])}</h3><p>{x(history['description'])}</p></section>'''
-page('Boyu (Billy) Hou — Speech enhancement and sequence models',
-     'Boyu (Billy) Hou, University of Bristol BEng Computer Science and Electronics graduate. Research on causal audio-visual speech enhancement and sequence models.',
+page('Boyu (Billy) Hou — AI systems that keep learning after deployment',
+     'Boyu (Billy) Hou, University of Bristol graduate. Research on AI systems that keep learning after deployment; earlier work on audio-visual speech enhancement.',
      '/',home,schema=[person,website])
 for kind in SHOWN:
     title=LABELS[kind]
     description={'writing':'Essays and longer reflections.','research':'Research papers and preprints.','projects':'Selected projects and experiments.','notes':'Short, durable notes.','videos':'Talks and videos.'}[kind]
-    meta_description={'writing':'Essays and longer reflections by Boyu Hou.','research':'Research by Boyu Hou on causal audio-visual speech enhancement and sequence models.','projects':'Projects by Boyu Hou in speech enhancement, market-regime modelling, and value-at-risk forecasting.','notes':'Short notes by Boyu Hou.','videos':'Talks and videos by Boyu Hou.'}[kind]
+    meta_description={'writing':'Essays and longer reflections by Boyu Hou.','research':'Research by Boyu Hou on AI systems that keep learning after deployment, and earlier work on causal audio-visual speech enhancement.','projects':'Projects by Boyu Hou in speech enhancement, market-regime modelling, and value-at-risk forecasting.','notes':'Short notes by Boyu Hou.','videos':'Talks and videos by Boyu Hou.'}[kind]
     dated=[(kind,v) for v in items[kind] if v.get('date')]
     undated=[(kind,v) for v in items[kind] if not v.get('date') and v.get('status')!='Planned experiment']
     planned=[(kind,v) for v in items[kind] if v.get('status')=='Planned experiment']
