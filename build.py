@@ -56,10 +56,10 @@ def md(s):
     flush()
     return '\n'.join(out)
 
-def head(title,description,path,extra='',schema=None):
-    canonical=BASE+path
+def head(title,description,path,extra='',schema=None,canonical_path=None):
+    canonical=BASE+(canonical_path or path)
     structured=f'<script type="application/ld+json">{json.dumps(schema,ensure_ascii=False).replace("<","\\u003c")}</script>' if schema else ''
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><title>{x(title)}</title><meta name="description" content="{x(description)}"><link rel="canonical" href="{canonical}"><meta property="og:type" content="{'article' if path.count('/')>2 else 'website'}"><meta property="og:title" content="{x(title)}"><meta property="og:description" content="{x(description)}"><meta property="og:url" content="{canonical}"><meta property="og:site_name" content="Boyu Hou"><meta name="twitter:card" content="summary"><link rel="alternate" type="application/rss+xml" title="Boyu Hou: Writing and Notes" href="/feed.xml"><link rel="stylesheet" href="/style.css?v={ver('style.css')}">{extra}{structured}</head><body><a class="skip" href="#main">Skip to content</a><div class="shell"><header class="site-header"><a class="brand" href="/">Boyu Hou</a><nav aria-label="Main navigation"><a href="/research/">Research</a><a href="/projects/">Projects</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="/cv/">CV</a></nav></header><main id="main">'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><title>{x(title)}</title><meta name="description" content="{x(description)}"><link rel="canonical" href="{canonical}"><meta property="og:type" content="{'article' if path.count('/')>2 else 'website'}"><meta property="og:title" content="{x(title)}"><meta property="og:description" content="{x(description)}"><meta property="og:url" content="{canonical}"><meta property="og:site_name" content="Boyu Hou"><meta property="og:image" content="{BASE}/images/boyu-portrait.jpg"><meta property="og:image:alt" content="Portrait of Boyu Hou"><meta name="twitter:card" content="summary_large_image"><link rel="alternate" type="application/rss+xml" title="Boyu Hou: Writing and Notes" href="/feed.xml"><link rel="stylesheet" href="/style.css?v={ver('style.css')}">{extra}{structured}</head><body><a class="skip" href="#main">Skip to content</a><div class="shell"><header class="site-header"><a class="brand" href="/">Boyu Hou</a><nav aria-label="Main navigation"><a href="/research/">Research</a><a href="/projects/">Projects</a><a href="/notes/">Notes</a><a href="/about/">About</a><a href="/cv/">CV</a></nav></header><main id="main">'''
 def foot():
     links=[link(profiles[k],k) for k in ('Email','GitHub','Scholar','LinkedIn','ORCID','X','YouTube') if profiles.get(k)]
     links.append(link('/feed.xml','RSS'))
@@ -82,7 +82,7 @@ def grouped(entries):
     return ''.join(f'<section class="year"><h2>{year}</h2><div>{"".join(row(k,v) for k,v in values)}</div></section>' for year,values in sorted(years.items(),reverse=True))
 
 def ver(p):return hashlib.md5((ROOT/p).read_bytes()).hexdigest()[:8]
-def page(title,description,path,body,extra='',schema=None):save(path,head(title,description,path,extra,schema)+body+foot())
+def page(title,description,path,body,extra='',schema=None,canonical_path=None):save(path,head(title,description,path,extra,schema,canonical_path)+body+foot())
 
 if OUT.exists():shutil.rmtree(OUT)
 OUT.mkdir()
@@ -91,8 +91,15 @@ if (ROOT/'public').exists():
     shutil.copytree(ROOT/'public',OUT,dirs_exist_ok=True)
 (OUT/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://boyuhou.com/sitemap.xml\n')
 
-person={'@context':'https://schema.org','@type':'Person','name':'Boyu Hou','url':BASE}
+person={'@context':'https://schema.org','@type':'Person','name':'Boyu Hou',
+        'alternateName':['Billy Hou','Boyu (Billy) Hou'],
+        'url':BASE,'image':BASE+'/images/boyu-portrait.jpg',
+        'alumniOf':[{'@type':'CollegeOrUniversity','name':'University of Bristol'},
+                    {'@type':'CollegeOrUniversity','name':'Newcastle University'}],
+        'knowsAbout':['audio-visual speech enhancement','state-space models','sequence models','market regime detection']}
 person['sameAs']=[v for v in profiles.values() if v and v.startswith('https://')]
+website={'@context':'https://schema.org','@type':'WebSite','name':'Boyu Hou','alternateName':['Billy Hou','boyuhou.com'],'url':BASE+'/'}
+CANONICAL_OVERRIDE={'/projects/houmoon/':'/houmoon/'}
 SHOWN=[k for k in KINDS if items[k]]
 paper=next(v for v in items['research'] if v['slug']=='vdbc-mamba2')
 course=next(v for v in items['projects'] if v['slug']=='causal-avse-with-mamba')
@@ -101,7 +108,7 @@ history=next(v for v in items['projects'] if v['slug']=='living-through-history'
 var=next(v for v in items['projects'] if v['slug']=='var-risk-project')
 hmm=next(v for v in items['projects'] if v['slug']=='hmm-market-regime-detection')
 houmoon=next(v for v in items['projects'] if v['slug']=='houmoon')
-home=f'''<section class="home-intro"><div class="home-intro-copy"><h1>Boyu Hou</h1><p class="personal-signature">Resilience matters. Nothing I have lived through is ever truly left behind. It becomes part of who I am, and I grow with it. The future is better not because the past disappears, but because I carry it forward and become more than I was.</p><p class="home-bio">Boyu Hou is a BEng Computer Science and Electronics graduate of the University of Bristol (2022–2026). The research focus is placed on AI systems that keep learning after deployment and make low-latency decisions as new information arrives. Financial markets are chosen as the test. Information there arrives in a fixed order, and each decision can be scored against what happened next. A single-author preprint on causal audio-visual speech enhancement, VDBC-Mamba-2, has been submitted to IEEE ICASSP 2027, and two projects on market regimes and Value-at-Risk have been completed. In addition, Houmoon Ltd, an AI wellbeing start-up, was founded in 2024 and closed in 2026 before any public release.</p></div><img class="portrait" src="/images/boyu-portrait.jpg" alt="Portrait of Boyu Hou" width="1727" height="2048" fetchpriority="high"></section>
+home=f'''<section class="home-intro"><div class="home-intro-copy"><h1>Boyu Hou</h1><p class="personal-signature">Resilience matters. Nothing I have lived through is ever truly left behind. It becomes part of who I am, and I grow with it. The future is better not because the past disappears, but because I carry it forward and become more than I was.</p><p class="home-bio">Boyu (Billy) Hou is a BEng Computer Science and Electronics graduate of the University of Bristol (2022–2026). The research focus is placed on AI systems that keep learning after deployment and make low-latency decisions as new information arrives. Financial markets are chosen as the test. Information there arrives in a fixed order, and each decision can be scored against what happened next. A single-author preprint on causal audio-visual speech enhancement, VDBC-Mamba-2, has been submitted to IEEE ICASSP 2027, and two projects on market regimes and Value-at-Risk have been completed. In addition, Houmoon Ltd, an AI wellbeing start-up, was founded in 2024 and closed in 2026 before any public release.</p></div><img class="portrait" src="/images/boyu-portrait.jpg" alt="Portrait of Boyu Hou" width="1727" height="2048" fetchpriority="high"></section>
 <section class="home-section timeline" aria-labelledby="timeline-title"><h2 id="timeline-title">Timeline</h2>
 <div class="timeline-row"><p class="timeline-date">2026</p><div class="experience"><span class="experience-logo logo-blank" aria-hidden="true"></span><div><h3>{link(url('research',paper),'VDBC-Mamba-2')}</h3><p>Single-author preprint on causal audio-visual speech enhancement, submitted to IEEE ICASSP 2027.</p></div></div></div>
 <div class="timeline-row"><p class="timeline-date">2025–2026</p><div class="experience"><span class="experience-logo logo-blank" aria-hidden="true"></span><div><h3>Market regimes and Value-at-Risk</h3><p>{link(url('projects',var),'Regime-aware VaR')} and {link(url('projects',hmm),'HMM regime detection')} on market data, backtested using only past information.</p></div></div></div>
@@ -119,10 +126,13 @@ home=f'''<section class="home-intro"><div class="home-intro-copy"><h1>Boyu Hou</
 </section>
 <section class="home-section notes-feature" aria-labelledby="notes-title"><h2 id="notes-title">Notes</h2><p class="item-meta">NOTE · SEP 2026</p><h3>{link(url('notes',window),'I Looked at a Window')}</h3><p>I thought I was looking at glass. But the observation itself did not prove that it was glass.</p><p class="small-link">{link(url('notes',window),'Read the note →')}</p></section>
 <section class="home-section upcoming" aria-labelledby="upcoming-title"><h2 id="upcoming-title">Upcoming</h2><p class="item-meta">Planned experiment</p><h3>{link(url('projects',history),history['title'])}</h3><p>{x(history['description'])}</p></section>'''
-page('Boyu Hou — Writing, research, projects','Writing, research, and projects by Boyu Hou.','/',home,schema=person)
+page('Boyu (Billy) Hou — Speech enhancement and sequence models',
+     'Boyu (Billy) Hou, University of Bristol BEng Computer Science and Electronics graduate. Research on causal audio-visual speech enhancement and sequence models.',
+     '/',home,schema=[person,website])
 for kind in SHOWN:
     title=LABELS[kind]
     description={'writing':'Essays and longer reflections.','research':'Research papers and preprints.','projects':'Selected projects and experiments.','notes':'Short, durable notes.','videos':'Talks and videos.'}[kind]
+    meta_description={'writing':'Essays and longer reflections by Boyu Hou.','research':'Research by Boyu Hou on causal audio-visual speech enhancement and sequence models.','projects':'Projects by Boyu Hou in speech enhancement, market-regime modelling, and value-at-risk forecasting.','notes':'Short notes by Boyu Hou.','videos':'Talks and videos by Boyu Hou.'}[kind]
     dated=[(kind,v) for v in items[kind] if v.get('date')]
     undated=[(kind,v) for v in items[kind] if not v.get('date') and v.get('status')!='Planned experiment']
     planned=[(kind,v) for v in items[kind] if v.get('status')=='Planned experiment']
@@ -132,7 +142,7 @@ for kind in SHOWN:
         if earlier:listing+='<section class="year earlier"><h2>Earlier work</h2><div>'+row('projects',{**earlier,'title':earlier['reportTitle'],'status':'Course report · Group coursework'})+'</div></section>'
     if undated:listing+='<section class="year"><h2>Other work</h2><div>'+''.join(row(k,v) for k,v in undated)+'</div></section>'
     if planned:listing+='<section class="year"><h2>Upcoming</h2><div>'+''.join(row(k,v) for k,v in planned)+'</div></section>'
-    page(f'{title} — Boyu Hou',description,f'/{kind}/',f'<section class="listing"><h1>{title}</h1><p class="lede">{description}</p>{listing if listing else "<p class=quiet>Nothing published here yet.</p>"}</section>')
+    page(f'{title} — Boyu Hou',meta_description,f'/{kind}/',f'<section class="listing"><h1>{title}</h1><p class="lede">{description}</p>{listing if listing else "<p class=quiet>Nothing published here yet.</p>"}</section>')
 
 for kind in KINDS:
     for item in items[kind]:
@@ -177,7 +187,7 @@ for kind in KINDS:
             rk,rs=ref.split('/',1);match=next((v for v in items.get(rk,[]) if v['slug']==rs),None)
             if match:related.append(f'<li>{link(url(rk,match),match["title"])} <span class="kind">{LABELS[rk]}</span></li>')
         if related:body=body.replace('</article>','<section class="related"><h2>Related</h2><ul>'+''.join(related)+'</ul></section></article>')
-        page(f'{title} — Boyu Hou',description,path,body,extra,schema)
+        page(f'{title} — Boyu Hou',description,path,body,extra,schema,CANONICAL_OVERRIDE.get(path))
 
 about='<section class="detail prose"><h1>About</h1>'+md((ROOT/'about.md').read_text())+'</section>'
 page('About — Boyu Hou','About Boyu Hou and his research interests.','/about/',about,schema=person)
@@ -189,12 +199,15 @@ cv=f'''<section class="detail cv-page"><div class="cv-header"><div><h1>CV</h1><p
 <section><h2>Projects</h2><div class="cv-item"><span>2025–2026</span><div><h3>{link(url('projects',var),var['title'])}</h3><p>{x(var['description'])}</p></div></div>
 <div class="cv-item"><span>2025–2026</span><div><h3>{link(url('projects',hmm),hmm['title'])}</h3><p>{x(hmm['description'])}</p></div></div>
 <div class="cv-item"><span>2026</span><div><h3>{link(url('projects',course),course['title'])}</h3><p>University of Bristol final-year group project. Co-led a six-person team. Supervised by Dr F. Karameh.</p></div></div></section>
-<section><h2>Experience</h2><div class="cv-item"><span>2024–2026</span><div><h3>{link('/houmoon/','Houmoon Ltd.')}</h3><p>Founder. AI wellbeing app built with React Native and Firebase, tested internally by about 100 people. The company was dissolved in May 2026 before any public release.</p></div></div><div class="cv-item"><span>2023–present</span><div><h3>Shenzhen Yingjia Investment Consulting Co., Ltd.</h3><p>Investment Analyst (part-time) since June 2025. Portfolio Assistant (part-time) from November 2023 to May 2025.</p><p>Responsible for RMB 500,000 and HKD 500,000 of investment capital. Kept trade and position records, prepared weekly summaries of profit and loss, drawdown and exposure, and applied position-sizing and stop-loss checks.</p></div></div></section>
+<section><h2>Experience</h2><div class="cv-item"><span>2024–2026</span><div><h3>{link('/houmoon/','Houmoon Ltd.')}</h3><p>Founder. AI wellbeing app built with React Native and Firebase, tested internally by about 100 people. The company was dissolved in May 2026 before any public release.</p></div></div><div class="cv-item"><span>2023–present</span><div><h3>Shenzhen Yingjia Investment Consulting Co., Ltd.</h3><p>Investment Analyst (part-time) since June 2025. Portfolio Assistant (part-time) from November 2023 to May 2025.</p><p>Managed RMB 500,000 and HKD 500,000 of family investment capital on the family's behalf. Kept trade and position records, prepared weekly summaries of profit and loss, drawdown and exposure, and applied position-sizing and stop-loss checks.</p></div></div></section>
 <section><h2>Tools</h2><p>Python, PyTorch, scikit-learn, hmmlearn, pandas, React Native, Firebase.</p></section></section>'''
 page('CV — Boyu Hou','Education, research, selected work, and experience of Boyu Hou.','/cv/',cv)
 page('Archive — Boyu Hou','A chronological archive of writing, research, notes, projects, and videos.','/archive/',f'<section class="listing"><h1>Archive</h1>{grouped(all_items) if all_items else "<p class=quiet>Nothing published yet.</p>"}</section>')
 paths=['/','/about/','/cv/','/archive/','/houmoon/']+[f'/{k}/' for k in SHOWN]+[url(k,v) for k in KINDS for v in items[k]]
-(OUT/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{BASE+p}</loc></url>' for p in paths)+'</urlset>')
+built=datetime.now(timezone.utc).date().isoformat()
+lastmod={url(k,v):v['date'] for k in KINDS for v in items[k] if len(v.get('date',''))==10}
+sitemap_paths=[p for p in paths if p not in CANONICAL_OVERRIDE]
+(OUT/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{BASE+p}</loc><lastmod>{lastmod.get(p,built)}</lastmod></url>' for p in sitemap_paths)+'</urlset>')
 feed=[(k,v) for k,v in all_items if k in ('writing','notes')]
 (OUT/'feed.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Boyu Hou — Writing and Notes</title><link>'+BASE+'/</link><description>Writing and notes by Boyu Hou.</description>'+''.join('<item><title>'+xml_escape(v['title'])+'</title><link>'+BASE+url(k,v)+'</link><guid>'+BASE+url(k,v)+'</guid><pubDate>'+format_datetime(datetime.fromisoformat(v['date']).replace(tzinfo=timezone.utc))+'</pubDate><description>'+xml_escape(v.get('description',''))+'</description></item>' for k,v in feed)+'</channel></rss>')
 print(f'Built {len(paths)} pages')
